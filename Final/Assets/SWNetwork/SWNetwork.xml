@@ -734,6 +734,12 @@
             </summary>
             <value>The network object identifier.</value>
         </member>
+        <member name="P:SWNetwork.NetworkID.OwnerRemotePlayerId">
+            <summary>
+            Gets the owner remote playerId.
+            </summary>
+            <value>The owner remote player identifier.</value>
+        </member>
         <member name="P:SWNetwork.NetworkID.IsOnline">
             <summary>
             Gets a value indicating whether this <see cref="T:SWNetwork.NetworkID"/> is online.
@@ -764,6 +770,12 @@
             Find out if the networked GameObject is owned by the room host
             </summary>
             <value><c>true</c> if is owned by the host; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="M:SWNetwork.NetworkID.Destroy">
+            <summary>
+            Destroies the networked GameObject across the network.
+            Use DestroyFixedNetworkedGameObject() to destroy FixedNetworkedGameObject
+            </summary>
         </member>
         <member name="M:SWNetwork.NetworkID.DestroyFixedNetworkedGameObject">
             <summary>
@@ -1011,7 +1023,8 @@
         </member>
         <member name="M:SWNetwork.SceneSpawner.DestroyGameObject(UnityEngine.GameObject)">
             <summary>
-            Destroies the networked GameObject.
+            Destroies the networked GameObject across the network.
+            Use NetworkID.DestroyFixedNetworkedGameObject() to destroy FixedNetworkedGameObject
             </summary>
             <param name="gameObject">Game object.</param>
         </member>
@@ -1175,6 +1188,16 @@
         <member name="M:SWNetwork.SWNetworkMessage.PopVector3">
             <summary>
             Pop a Vector3 value from the message.
+            </summary>
+        </member>
+        <member name="F:SWNetwork.SWPlayerData.R">
+            <summary>
+            room playerId
+            </summary>
+        </member>
+        <member name="F:SWNetwork.SWPlayerData.P">
+            <summary>
+            remote playerId
             </summary>
         </member>
         <member name="F:SWNetwork.SWSpawnerRecord.n">

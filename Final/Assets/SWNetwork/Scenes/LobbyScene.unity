@@ -1133,7 +1133,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1833037652}
   - component: {fileID: 1833037651}
-  - component: {fileID: 1833037653}
   m_Layer: 0
   m_Name: Lobby
   m_TagString: Untagged
@@ -1170,25 +1169,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1833037653
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1833037650}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1355464049, guid: 6a67afbfe15ab9c4696e982c25d07a84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 1
-  dynamicallySpawned: 1
-  fixedNetworkObjectID: 1
-  showVisibleGizmo: 1
-  Filterable: 0
-  SendRealtimeData: 1
-  visibleSize: 1
 --- !u!1 &1941936493
 GameObject:
   m_ObjectHideFlags: 0
