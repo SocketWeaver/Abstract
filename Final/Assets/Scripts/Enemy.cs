@@ -65,7 +65,6 @@ public class Enemy : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         GameObject other = collision.gameObject;
-        Debug.Log(other.name);
         Player player = other.GetComponent<Player>();
 
         if (player != null)

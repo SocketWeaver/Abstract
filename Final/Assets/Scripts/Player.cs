@@ -46,7 +46,7 @@ public class Player : MonoBehaviour
 
             movement.Move(move);
 
-            anim.SetBool("ground", movement.Ground);
+            anim.SetBool("air", !movement.Ground);
             anim.SetFloat("speed", Mathf.Abs(move));
 
             // shoot

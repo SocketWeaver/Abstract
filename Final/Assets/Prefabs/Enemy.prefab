@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1550847374937176980}
   - component: {fileID: 1907984948}
   - component: {fileID: 1907984947}
+  - component: {fileID: 5168915411284529484}
   m_Layer: 11
   m_Name: Enemy
   m_TagString: Untagged
@@ -188,10 +189,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   dynamicallySpawned: 0
-  fixedNetworkObjectID: 1
+  fixedNetworkObjectID: 37
   showVisibleGizmo: 1
   Filterable: 0
-  SendRealtimeData: 1
+  SendRealtimeData: 0
   visibleSize: 1
 --- !u!114 &1907984947
 MonoBehaviour:
@@ -296,6 +297,19 @@ MonoBehaviour:
   syncTransFormFoldout: 1
   syncAnimatorFoldout: 0
   restoreState: 1
+--- !u!114 &5168915411284529484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550847374937176981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 295c49620c76a4d408961fb3c566e918, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gizmoSize: 0.2
 --- !u!1 &1550847376241839202
 GameObject:
   m_ObjectHideFlags: 0
