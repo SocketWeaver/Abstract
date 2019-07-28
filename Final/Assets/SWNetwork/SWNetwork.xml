@@ -740,6 +740,12 @@
             </summary>
             <value>The owner remote player identifier.</value>
         </member>
+        <member name="P:SWNetwork.NetworkID.OwnerCustomPlayerId">
+            <summary>
+            Gets the owner custom playerId.
+            </summary>
+            <value>The owner custom player identifier.</value>
+        </member>
         <member name="P:SWNetwork.NetworkID.IsOnline">
             <summary>
             Gets a value indicating whether this <see cref="T:SWNetwork.NetworkID"/> is online.
@@ -771,10 +777,9 @@
             </summary>
             <value><c>true</c> if is owned by the host; otherwise, <c>false</c>.</value>
         </member>
-        <member name="M:SWNetwork.NetworkID.Destroy">
+        <member name="M:SWNetwork.NetworkID.Destroy(System.Single)">
             <summary>
-            Destroies the networked GameObject across the network.
-            Use DestroyFixedNetworkedGameObject() to destroy FixedNetworkedGameObject
+            Destroies the networked GameObject across the network with the specified delay time.
             </summary>
         </member>
         <member name="M:SWNetwork.NetworkID.DestroyFixedNetworkedGameObject">
@@ -969,6 +974,12 @@
             </summary>
             <param name="value">Value.</param>
         </member>
+        <member name="M:SWNetwork.SWSyncedPropertyAgent.Initialize">
+            <summary>
+            Attempts to initialize the SyncPropertyAgent.
+            Calling this method has no effect if the SyncPropertyAgent has already been initialized.
+            </summary>
+        </member>
         <member name="T:SWNetwork.SceneSpawnerReadyEvent">
             <summary>
             Scene spawner ready event.
@@ -1007,14 +1018,14 @@
             <param name="prefabIndex">Prefab index.</param>
             <param name="spawnPointIndex">Spawn point index.</param>
         </member>
-        <member name="M:SWNetwork.SceneSpawner.SpawnForPlayer(System.Int32,UnityEngine.Vector3,UnityEngine.Quaternion,System.Int32)">
+        <member name="M:SWNetwork.SceneSpawner.SpawnForPlayer(System.Int32,UnityEngine.Vector3,UnityEngine.Quaternion)">
             <summary>
             Spawns networked GameObject for player.
             </summary>
             <param name="prefabIndex">Prefab index.</param>
             <param name="position">Position.</param>
         </member>
-        <member name="M:SWNetwork.SceneSpawner.SpawnForNonPlayer(System.Int32,UnityEngine.Vector3,UnityEngine.Quaternion,System.Int32)">
+        <member name="M:SWNetwork.SceneSpawner.SpawnForNonPlayer(System.Int32,UnityEngine.Vector3,UnityEngine.Quaternion)">
             <summary>
             Spawns networked GameObject for non-player.
             </summary>
@@ -1027,6 +1038,12 @@
             Use NetworkID.DestroyFixedNetworkedGameObject() to destroy FixedNetworkedGameObject
             </summary>
             <param name="gameObject">Game object.</param>
+        </member>
+        <member name="M:SWNetwork.SceneSpawner.Initialize">
+            <summary>
+            Attempts to initialize the SceneSpawner.
+            Calling this method has no effect if the SceneSpawner has already been initialized.
+            </summary>
         </member>
         <member name="M:SWNetwork.SceneSpawner.PlayerFinishedSceneSetup">
             <summary>
@@ -1160,7 +1177,7 @@
             Pop an UInt32 value from the message.
             </summary>
         </member>
-        <member name="M:SWNetwork.SWNetworkMessage.PopUTF8ShortString(System.String)">
+        <member name="M:SWNetwork.SWNetworkMessage.PopUTF8ShortString">
             <summary>
             Pop a UTF8 string value from the message. Max length is 256.
             </summary>
