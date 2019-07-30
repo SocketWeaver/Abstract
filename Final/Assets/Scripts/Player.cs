@@ -13,6 +13,9 @@ public class Player : MonoBehaviour
 
     NetworkID networkID;
 
+    const string FIRE = "fire";
+    RemoteEventAgent remoteEventAgent;
+
     public void Killed()
     {
         Debug.Log("Game Over");
@@ -24,6 +27,7 @@ public class Player : MonoBehaviour
         movement = GetComponent<Movement>();
         shoot = GetComponent<Shoot>();
         networkID = GetComponent<NetworkID>();
+        remoteEventAgent = GetComponent<RemoteEventAgent>();
 
         if (networkID.IsMine)
         {
@@ -68,5 +72,15 @@ public class Player : MonoBehaviour
     void Fire()
     {
         shoot.FireBullet(movement.FaceRight);
+
+        SWNetworkMessage message = new SWNetworkMessage();
+        message.Push(movement.FaceRight);
+        remoteEventAgent.Invoke(FIRE, message);
+    }
+
+    public void RemoteFired(SWNetworkMessage message)
+    {
+        bool faceRight = message.PopBool();
+        shoot.FireBullet(faceRight);
     }
 }

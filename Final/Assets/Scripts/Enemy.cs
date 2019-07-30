@@ -26,7 +26,10 @@ public class Enemy : MonoBehaviour
 
     public void Killed()
     {
-        Destroy(gameObject);
+        if (NetworkClient.Instance.IsHost)
+        {
+            networkID.Destroy();
+        }
     }
 
     // Start is called before the first frame update

@@ -12830,6 +12830,7 @@ MonoBehaviour:
   playerPrefabsFoldout: 1
   nonPlayerPrefabsFoldout: 1
   spawnerId: 1
+  AutoInitialization: 1
   OnReady:
     m_PersistentCalls:
       m_Calls:
