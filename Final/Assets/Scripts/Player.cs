@@ -22,11 +22,7 @@ public class Player : MonoBehaviour
     public void TakeDamage(int damage)
     {
         Health = Mathf.Clamp(Health - damage, 0, MaxHealth);
-        if (healthBar != null)
-        {
-            float percentage = (float)Health / (float)MaxHealth;
-            healthBar.UpdateHealth(percentage);
-        }
+        UpdateHealthBar(Health);
     }
 
     void Start()
@@ -87,6 +83,15 @@ public class Player : MonoBehaviour
         SWNetworkMessage message = new SWNetworkMessage();
         message.Push(movement.FaceRight);
         remoteEventAgent.Invoke(FIRE, message);
+    }
+
+    void UpdateHealthBar(int currentHealth)
+    {
+        if (healthBar != null)
+        {
+            float percentage = (float)currentHealth / (float)MaxHealth;
+            healthBar.UpdateHealth(percentage);
+        }
     }
 
     public void RemoteFired(SWNetworkMessage message)
