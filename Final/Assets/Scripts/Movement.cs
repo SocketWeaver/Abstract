@@ -10,6 +10,7 @@ public class Movement : MonoBehaviour
     public float JumpVelocity = 8.0f;
     public LayerMask GroundMask;
     public float ResetJumpDelay = 0.2f;
+    public Transform sprite;
 
     public bool FaceRight
     {
@@ -99,8 +100,8 @@ public class Movement : MonoBehaviour
     {
         faceRight = !faceRight;
 
-        Vector3 theScale = transform.localScale;
+        Vector3 theScale = sprite.localScale;
         theScale.x *= -1;
-        transform.localScale = theScale;
+        sprite.localScale = theScale;
     }
 }

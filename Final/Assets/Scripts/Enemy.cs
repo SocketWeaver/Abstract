@@ -6,10 +6,10 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
 
-    public bool moveToRight = true;
+    public bool MoveToRight = true;
 
     [Header("Detection")]
-    public float leadingBuffer = 0.5f;
+    public float LeadingBuffer = 0.5f;
     public LayerMask DetectionMask;
 
     [Header("Edge")]
@@ -20,15 +20,26 @@ public class Enemy : MonoBehaviour
     public bool WallDetectionEnabled = true;
     public float WallDetection = 0.2f;
 
+
+    [Header("Attack")]
+    public int Damage = 1;
+
     Movement movement;
 
     NetworkID networkID;
 
     public void Killed()
     {
-        if (NetworkClient.Instance.IsHost)
+        if (NetworkClient.Instance != null)
         {
-            networkID.Destroy();
+            if (NetworkClient.Instance.IsHost)
+            {
+                networkID.Destroy();
+            }
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 
@@ -46,15 +57,15 @@ public class Enemy : MonoBehaviour
         {
             if (EdgeDetectionEnabled && EdgeDetected())
             {
-                moveToRight = !moveToRight;
+                MoveToRight = !MoveToRight;
             }
 
             if (WallDetectionEnabled && WallDetected())
             {
-                moveToRight = !moveToRight;
+                MoveToRight = !MoveToRight;
             }
 
-            if (moveToRight)
+            if (MoveToRight)
             {
                 movement.Move(1);
             }
@@ -72,7 +83,7 @@ public class Enemy : MonoBehaviour
 
         if (player != null)
         {
-            player.Killed();
+            player.TakeDamage(Damage);
         }
     }
 
@@ -82,11 +93,11 @@ public class Enemy : MonoBehaviour
 
         if (movement.FaceRight)
         {
-            detectionPosition += Vector3.right * leadingBuffer;
+            detectionPosition += Vector3.right * LeadingBuffer;
         }
         else
         {
-            detectionPosition -= Vector3.right * leadingBuffer;
+            detectionPosition -= Vector3.right * LeadingBuffer;
         }
 
         return detectionPosition;

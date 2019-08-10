@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/SWNetwork/Scenes/LobbyScene.unity
     guid: d31d59fea45914a0289f5eab75dab0a6
   - enabled: 1
-    path: Assets/Game_big.unity
-    guid: b23e8980f4b414b0b906f8edf490cc09
+    path: Assets/Game.unity
+    guid: b35b5a67d2ea1ab458aaed738b342879
   m_configObjects: {}

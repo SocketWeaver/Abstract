@@ -154,6 +154,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   ResetJumpDelay: 0.05
+  sprite: {fileID: 1550847374937177006}
 --- !u!114 &1550847374937176980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,8 +167,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29b2389ad8e1f4e158fc79f575fc1760, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveToRight: 1
-  leadingBuffer: 0.1
+  MoveToRight: 1
+  LeadingBuffer: 0.2
   DetectionMask:
     serializedVersion: 2
     m_Bits: 256
@@ -175,6 +176,7 @@ MonoBehaviour:
   EdgeDetectionRayDistance: 0.2
   WallDetectionEnabled: 1
   WallDetection: 0.2
+  Damage: 1
 --- !u!114 &1907984948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,7 +191,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   dynamicallySpawned: 0
-  fixedNetworkObjectID: 37
+  fixedNetworkObjectID: 2
   showVisibleGizmo: 1
   Filterable: 0
   SendRealtimeData: 0
@@ -294,7 +296,7 @@ MonoBehaviour:
     padding: 0
   syncTransFormEnabled: 1
   syncAnimatorEnabled: 0
-  syncTransFormFoldout: 1
+  syncTransFormFoldout: 0
   syncAnimatorFoldout: 0
   restoreState: 1
 --- !u!114 &5168915411284529484

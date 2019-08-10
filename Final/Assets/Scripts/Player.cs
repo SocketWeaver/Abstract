@@ -6,6 +6,7 @@ using SWNetwork;
 public class Player : MonoBehaviour
 {
     public float FiringSpeed = 1.0f;
+    public int Health = 0;
 
     Movement movement;
     Shoot shoot;
@@ -14,26 +15,36 @@ public class Player : MonoBehaviour
     NetworkID networkID;
 
     const string FIRE = "fire";
+    const int MaxHealth = 5;
     RemoteEventAgent remoteEventAgent;
+    HealthBar healthBar;
 
-    public void Killed()
+    public void TakeDamage(int damage)
     {
-        Debug.Log("Game Over");
+        Health = Mathf.Clamp(Health - damage, 0, MaxHealth);
+        if (healthBar != null)
+        {
+            float percentage = (float)Health / (float)MaxHealth;
+            healthBar.UpdateHealth(percentage);
+        }
     }
 
     void Start()
     {
-        anim = GetComponent<Animator>();
+        anim = GetComponentInChildren<Animator>();
         movement = GetComponent<Movement>();
         shoot = GetComponent<Shoot>();
         networkID = GetComponent<NetworkID>();
         remoteEventAgent = GetComponent<RemoteEventAgent>();
+        healthBar = GetComponentInChildren<HealthBar>();
 
         if (networkID.IsMine)
         {
             CameraFollow cameraFollow = Camera.main.GetComponent<CameraFollow>();
             cameraFollow.Target = transform;
         }
+
+        Health = MaxHealth;
     }
 
     void Update()
