@@ -15,14 +15,20 @@ public class Player : MonoBehaviour
     NetworkID networkID;
 
     const string FIRE = "fire";
+    const string HEALTH = "Health";
     const int MaxHealth = 5;
     RemoteEventAgent remoteEventAgent;
+    SyncPropertyAgent syncPropertyAgent;
     HealthBar healthBar;
 
     public void TakeDamage(int damage)
     {
-        Health = Mathf.Clamp(Health - damage, 0, MaxHealth);
-        UpdateHealthBar(Health);
+        int health = syncPropertyAgent.GetPropertyWithName(HEALTH).GetIntValue();
+        health = Mathf.Clamp(health - damage, 0, MaxHealth);
+        if (NetworkClient.Instance.IsHost)
+        {
+            syncPropertyAgent.Modify(HEALTH, health);
+        }
     }
 
     void Start()
@@ -32,6 +38,8 @@ public class Player : MonoBehaviour
         shoot = GetComponent<Shoot>();
         networkID = GetComponent<NetworkID>();
         remoteEventAgent = GetComponent<RemoteEventAgent>();
+        syncPropertyAgent = GetComponent<SyncPropertyAgent>();
+
         healthBar = GetComponentInChildren<HealthBar>();
 
         if (networkID.IsMine)
@@ -41,6 +49,26 @@ public class Player : MonoBehaviour
         }
 
         Health = MaxHealth;
+    }
+
+    public void OnHealthSyncPropertyReady()
+    {
+        int health = syncPropertyAgent.GetPropertyWithName(HEALTH).GetIntValue();
+        int version = syncPropertyAgent.GetPropertyWithName(HEALTH).version;
+
+        if(version == 0)
+        {
+            syncPropertyAgent.Modify(HEALTH, MaxHealth);
+            health = MaxHealth;
+        }
+
+        UpdateHealthBar(health);
+    }
+
+    public void OnHealthSyncPropertyChanged()
+    {
+        int health = syncPropertyAgent.GetPropertyWithName(HEALTH).GetIntValue();
+        UpdateHealthBar(health);
     }
 
     void Update()

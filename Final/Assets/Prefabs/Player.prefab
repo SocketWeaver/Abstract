@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 55}
   - component: {fileID: 58}
   - component: {fileID: 74}
+  - component: {fileID: 894772278}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -325,6 +326,63 @@ MonoBehaviour:
     m_Bits: 256
   ResetJumpDelay: 0.1
   sprite: {fileID: 8230545864162977724}
+--- !u!114 &894772278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 48}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1872577316, guid: 6a67afbfe15ab9c4696e982c25d07a84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  properties_:
+  - Foldout: 1
+    name: Health
+    type: 2
+    conflictResolution: 0
+    data: 
+    onValueChange:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 80}
+          m_MethodName: OnHealthSyncPropertyChanged
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: SWNetwork.SWSyncedPropertyValueChangeEvent, SWNetwork, Version=1.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    onConflict:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: SWNetwork.SWSyncedPropertyConflictEvent, SWNetwork, Version=1.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    onReady:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 80}
+          m_MethodName: OnHealthSyncPropertyReady
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: SWNetwork.SWSyncedPropertyInitialFetchFinishedEvent, SWNetwork,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  restoreState: 1
+  AutoInitialization: 1
 --- !u!1001 &8230545863579393036
 PrefabInstance:
   m_ObjectHideFlags: 0
