@@ -67,6 +67,7 @@
     <Compile Include="Assets\Scripts\HealthBar.cs" />
     <Compile Include="Assets\Scripts\Movement.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
+    <Compile Include="Assets\Scripts\Portal.cs" />
     <Compile Include="Assets\Scripts\Shoot.cs" />
     <Compile Include="Assets\SWNetwork\Scripts\Lobby.cs" />
     <Compile Include="Assets\SWNetwork\Tools\NonPlayerFilter.cs" />

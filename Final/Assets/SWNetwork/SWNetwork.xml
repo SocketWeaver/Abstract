@@ -293,7 +293,7 @@
             The data.
             </summary>
         </member>
-        <member name="T:SWNetwork._SWRoomReadyEventData">
+        <member name="T:SWNetwork.SWRoomReadyEventData">
             <summary>
             Event Data of the OnRoomReadyEvent
             </summary>
