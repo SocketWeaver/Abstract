@@ -6,7 +6,6 @@ using SWNetwork;
 public class Player : MonoBehaviour, IHealth
 {
     public float FiringSpeed = 1.0f;
-    public int Health = 0;
 
     Movement movement;
     Shoot shoot;
@@ -23,17 +22,9 @@ public class Player : MonoBehaviour, IHealth
 
     public void TakeDamage(int damage)
     {
-        Debug.Log(damage);
         int health = syncPropertyAgent.GetPropertyWithName(HEALTH).GetIntValue();
         health = Mathf.Clamp(health - damage, 0, MaxHealth);
-        if(NetworkClient.Instance != null)
-        {
-            if (NetworkClient.Instance.IsHost)
-            {
-                syncPropertyAgent.Modify(HEALTH, health);
-            }
-        }
-        else
+        if(NetworkClient.Instance == null || NetworkClient.Instance.IsHost)
         {
             syncPropertyAgent.Modify(HEALTH, health);
         }
@@ -55,8 +46,6 @@ public class Player : MonoBehaviour, IHealth
             CameraFollow cameraFollow = Camera.main.GetComponent<CameraFollow>();
             cameraFollow.Target = transform;
         }
-
-        Health = MaxHealth;
     }
 
     public void OnHealthSyncPropertyReady()
