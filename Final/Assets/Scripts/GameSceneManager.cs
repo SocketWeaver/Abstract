@@ -6,7 +6,7 @@ using SWNetwork;
 public class GameSceneManager : MonoBehaviour
 {
     // SceneSpanwer events
-    public void OnSpawnerReady(bool finishedSceneSetup)
+    public void OnSpawnerReady(bool finishedSceneSetup, SceneSpawner sceneSpawner)
     {
         // scene has not been set up. spawn a car for the local player.
         if (!finishedSceneSetup)
@@ -18,15 +18,15 @@ public class GameSceneManager : MonoBehaviour
             */
             if (NetworkClient.Instance.IsHost)
             {
-                NetworkClient.Instance.LastSpawner.SpawnForPlayer(0, 1);
+                sceneSpawner.SpawnForPlayer(0, 1);
             }
             else
             {
-                NetworkClient.Instance.LastSpawner.SpawnForPlayer(0, 0);
+                sceneSpawner.SpawnForPlayer(0, 0);
             }
 
             // tells the SceneSpawner the local player has finished scene setup.
-            NetworkClient.Instance.LastSpawner.PlayerFinishedSceneSetup();
+            sceneSpawner.PlayerFinishedSceneSetup();
         }
     }
 }

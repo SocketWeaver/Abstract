@@ -6,17 +6,11 @@ public class Portal : MonoBehaviour
 {
     public Transform Destination;
 
-    void OnTriggerEnter2D(Collider2D collision)
+    public void OnPlayerEntered(Player player)
     {
-        if(Destination!= null)
+        if (player != null)
         {
-            GameObject other = collision.gameObject;
-            Player player = other.GetComponent<Player>();
-
-            if (player != null)
-            {
-                player.transform.position = Destination.position;
-            }
+            player.transform.position = Destination.position;
         }
     }
 }

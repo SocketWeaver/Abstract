@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using SWNetwork;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IHealth
 {
 
     public bool MoveToRight = true;
@@ -27,21 +27,6 @@ public class Enemy : MonoBehaviour
     Movement movement;
 
     NetworkID networkID;
-
-    public void Killed()
-    {
-        if (NetworkClient.Instance != null)
-        {
-            if (NetworkClient.Instance.IsHost)
-            {
-                networkID.Destroy();
-            }
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -79,11 +64,11 @@ public class Enemy : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         GameObject other = collision.gameObject;
-        Player player = other.GetComponent<Player>();
+        IHealth health = (IHealth)other.GetComponent(typeof(IHealth));
 
-        if (player != null)
+        if (health != null)
         {
-            player.TakeDamage(Damage);
+            health.TakeDamage(Damage);
         }
     }
 
@@ -130,5 +115,25 @@ public class Enemy : MonoBehaviour
         bool hitWall = hit2D.collider != null;
 
         return hitWall;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        Killed();
+    }
+
+    void Killed()
+    {
+        if (NetworkClient.Instance != null)
+        {
+            if (NetworkClient.Instance.IsHost)
+            {
+                networkID.Destroy();
+            }
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }

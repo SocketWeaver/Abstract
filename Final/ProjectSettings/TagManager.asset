@@ -18,8 +18,8 @@ TagManager:
   - Player
   - Enemy
   - EnemyFilter
-  - 
-  - 
+  - EnemyBullet
+  - EventTrigger
   - 
   - 
   - 

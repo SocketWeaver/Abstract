@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using SWNetwork;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IHealth
 {
     public float FiringSpeed = 1.0f;
     public int Health = 0;
@@ -23,9 +23,17 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        Debug.Log(damage);
         int health = syncPropertyAgent.GetPropertyWithName(HEALTH).GetIntValue();
         health = Mathf.Clamp(health - damage, 0, MaxHealth);
-        if (NetworkClient.Instance.IsHost)
+        if(NetworkClient.Instance != null)
+        {
+            if (NetworkClient.Instance.IsHost)
+            {
+                syncPropertyAgent.Modify(HEALTH, health);
+            }
+        }
+        else
         {
             syncPropertyAgent.Modify(HEALTH, health);
         }
