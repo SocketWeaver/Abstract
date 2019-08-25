@@ -42,6 +42,10 @@ GameObject:
   - component: {fileID: 3114137878146528164}
   - component: {fileID: 3114137878146528165}
   - component: {fileID: 3114137878146528166}
+  - component: {fileID: 1581072147}
+  - component: {fileID: 1581072146}
+  - component: {fileID: 1581072145}
+  - component: {fileID: 1581072144}
   m_Layer: 11
   m_Name: Boss
   m_TagString: Untagged
@@ -132,16 +136,230 @@ MonoBehaviour:
   AttackTime: 6
   RestTime: 6
   TargetPositionSnapDistance: 0.01
+  stateTimer: 0
+  bossState: 0
   MaxHealth: 30
   Bullet: {fileID: 7964362483273647239, guid: 753434fc28963426ca7ebc94c834bb51, type: 3}
   FirePosition: {fileID: 3114137877770354697}
   BulletSpeed: 2
   NumberOfBullets: 9
   AttackAngle: 50
+  AttackRandomAngle: 30
   HitMaterial: {fileID: 2100000, guid: bd166eaec5b5c430a9714dbefc0a9d14, type: 2}
   HitEffectDisplayTime: 0.2
   Explosion: {fileID: 6082777170129241821, guid: 4f3b0b2cd18bc497e9e999f7fc795c00,
     type: 3}
+--- !u!114 &1581072147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3114137878146528162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1355464049, guid: 6a67afbfe15ab9c4696e982c25d07a84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  dynamicallySpawned: 0
+  fixedNetworkObjectID: 5
+  showVisibleGizmo: 1
+  Filterable: 0
+  SendRealtimeData: 0
+  visibleSize: 1
+--- !u!114 &1581072146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3114137878146528162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1480947390, guid: 6a67afbfe15ab9c4696e982c25d07a84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncedGenerics: []
+  syncedTransform:
+    interpolate: 20
+    smoothLevel: 0
+    snapDistance: 2
+    readFunction: 1
+    bandwidth: 2
+    padding: 6
+    pos_x_setting:
+      enabled: 0
+      min: -300
+      max: 300
+      resolution: 3
+      valueType: 0
+      minInt: -300
+      maxInt: 300
+    pos_y_setting:
+      enabled: 1
+      min: -5
+      max: 5
+      resolution: 3
+      valueType: 0
+      minInt: -300
+      maxInt: 300
+    pos_z_setting:
+      enabled: 0
+      min: -300
+      max: 300
+      resolution: 3
+      valueType: 0
+      minInt: -300
+      maxInt: 300
+    rot_x_setting:
+      enabled: 0
+      min: -300
+      max: 300
+      resolution: 3
+      valueType: 0
+      minInt: -300
+      maxInt: 300
+    rot_y_setting:
+      enabled: 0
+      min: -300
+      max: 300
+      resolution: 3
+      valueType: 0
+      minInt: -300
+      maxInt: 300
+    rot_z_setting:
+      enabled: 0
+      min: -300
+      max: 300
+      resolution: 3
+      valueType: 0
+      minInt: -300
+      maxInt: 300
+    scale_x_setting:
+      enabled: 0
+      min: -300
+      max: 300
+      resolution: 3
+      valueType: 0
+      minInt: -300
+      maxInt: 300
+    scale_y_setting:
+      enabled: 0
+      min: -300
+      max: 300
+      resolution: 3
+      valueType: 0
+      minInt: -300
+      maxInt: 300
+    scale_z_setting:
+      enabled: 0
+      min: -300
+      max: 300
+      resolution: 3
+      valueType: 0
+      minInt: -300
+      maxInt: 300
+    externalFreeze: 0.2
+  syncedAnimator:
+    animator: {fileID: 0}
+    syncParameters: []
+    bandwidth: 0
+    padding: 0
+  syncTransFormEnabled: 1
+  syncAnimatorEnabled: 0
+  syncTransFormFoldout: 1
+  syncAnimatorFoldout: 0
+  restoreState: 1
+--- !u!114 &1581072145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3114137878146528162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1872577316, guid: 6a67afbfe15ab9c4696e982c25d07a84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  properties_:
+  - Foldout: 1
+    name: Health
+    type: 2
+    conflictResolution: 0
+    data: 
+    onValueChange:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3114137878146528166}
+          m_MethodName: OnHealthSyncPropertyChanged
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: SWNetwork.SWSyncedPropertyValueChangeEvent, SWNetwork, Version=1.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    onConflict:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: SWNetwork.SWSyncedPropertyConflictEvent, SWNetwork, Version=1.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    onReady:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3114137878146528166}
+          m_MethodName: OnHealthSyncPropertyReady
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: SWNetwork.SWSyncedPropertyInitialFetchFinishedEvent, SWNetwork,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  restoreState: 1
+  AutoInitialization: 1
+--- !u!114 &1581072144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3114137878146528162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 202338497, guid: 6a67afbfe15ab9c4696e982c25d07a84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  remoteEvents_:
+  - eventName: fire
+    Foldout: 1
+    target: 0
+    remoteEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3114137878146528166}
+          m_MethodName: DoFire
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: SWNetwork.SWRPCEvent, SWNetwork, Version=1.0.0.0, Culture=neutral,
+        PublicKeyToken=null
 --- !u!1 &3114137879764666897
 GameObject:
   m_ObjectHideFlags: 0

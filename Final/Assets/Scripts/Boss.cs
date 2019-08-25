@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SWNetwork;
 using UnityEngine;
 
 public class Boss : MonoBehaviour, IHealth
@@ -44,6 +45,13 @@ public class Boss : MonoBehaviour, IHealth
     SpriteRenderer spriteRenderer;
     Material defaultMaterial;
 
+    // networking
+    NetworkID networkID;
+    const string FIRE = "fire";
+    const string HEALTH = "Health";
+    RemoteEventAgent remoteEventAgent;
+    SyncPropertyAgent syncPropertyAgent;
+
     void Start()
     {
         bossState = BossState.Idle;
@@ -52,15 +60,45 @@ public class Boss : MonoBehaviour, IHealth
         defaultMaterial = spriteRenderer.material;
         rb2D = GetComponent<Rigidbody2D>();
         boxCollider2D = GetComponent<BoxCollider2D>();
+        networkID = GetComponent<NetworkID>();
+        remoteEventAgent = GetComponent<RemoteEventAgent>();
+        syncPropertyAgent = GetComponent<SyncPropertyAgent>();
+    }
 
-        currentHealth = MaxHealth;
-        UpdateHealthBar(currentHealth);
+    public void OnHealthSyncPropertyReady()
+    {
+        int health = syncPropertyAgent.GetPropertyWithName(HEALTH).GetIntValue();
+        int version = syncPropertyAgent.GetPropertyWithName(HEALTH).version;
+
+        if (version == 0)
+        {
+            syncPropertyAgent.Modify(HEALTH, MaxHealth);
+            health = MaxHealth;
+        }
+
+        UpdateHealthBar(health);
+    }
+
+    public void OnHealthSyncPropertyChanged()
+    {
+        int health = syncPropertyAgent.GetPropertyWithName(HEALTH).GetIntValue();
+        UpdateHealthBar(health);
+
+        StartHitEffect();
+
+        if (health == 0)
+        {
+            Die();
+        }
     }
 
     void FixedUpdate()
     {
         StopHitEffectIfNecessary();
-        BossAI();
+        if (NetworkClient.Instance == null|| NetworkClient.Instance.IsHost)
+        {
+            BossAI();
+        }
     }
 
     public void OnPlayerEntered(Player player)
@@ -68,6 +106,7 @@ public class Boss : MonoBehaviour, IHealth
         Debug.Log("Player entered");
         bossState = BossState.TransitToAttack;
         targetPosition = AttackPosition;
+        networkID.SendRealtimeData = true;
     }
 
     void BossAI()
@@ -163,11 +202,14 @@ public class Boss : MonoBehaviour, IHealth
     public void Fire()
     {
         float randomAngle = Random.Range(-1 * AttackRandomAngle, AttackRandomAngle);
-        DoFire(randomAngle);
+        SWNetworkMessage message = new SWNetworkMessage();
+        message.Push(randomAngle);
+        remoteEventAgent.Invoke(FIRE, message);
     }
 
-    public void DoFire(float randomAngle)
+    public void DoFire(SWNetworkMessage message)
     {
+        float randomAngle = message.PopFloat();
         for (int index = 0; index < NumberOfBullets; index++)
         {
             GameObject bullet = Instantiate(Bullet, FirePosition.position, FirePosition.rotation);
@@ -186,19 +228,16 @@ public class Boss : MonoBehaviour, IHealth
 
     public void TakeDamage(int damage)
     {
-        if(bossState == BossState.Idle)
+        if (NetworkClient.Instance == null || NetworkClient.Instance.IsHost)
         {
-            return;
-        }
+            if (bossState == BossState.Idle)
+            {
+                return;
+            }
 
-        currentHealth = Mathf.Clamp(currentHealth - damage, 0, MaxHealth);
-        UpdateHealthBar(currentHealth);
-
-        StartHitEffect();
-
-        if (currentHealth == 0)
-        {
-            Die();
+            int health = syncPropertyAgent.GetPropertyWithName(HEALTH).GetIntValue();
+            health = Mathf.Clamp(health - damage, 0, MaxHealth);
+            syncPropertyAgent.Modify(HEALTH, health);
         }
     }
 
@@ -233,7 +272,10 @@ public class Boss : MonoBehaviour, IHealth
         bossState = BossState.Idle;
         boxCollider2D.enabled = false;
 
-        Destroy(gameObject, 2.5f);
+        if(NetworkClient.Instance == null || NetworkClient.Instance.IsHost)
+        {
+            networkID.Destroy(2.5f);
+        }
     }
 
     void UpdateHealthBar(int health)
