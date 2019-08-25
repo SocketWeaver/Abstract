@@ -17,6 +17,8 @@ public class Boss : MonoBehaviour, IHealth
     public float stateTimer = 0;
     public BossState bossState;
     Vector2 targetPosition;
+    Rigidbody2D rb2D;
+    BoxCollider2D boxCollider2D;
 
     [Header("Health")]
     public int MaxHealth = 30;
@@ -31,6 +33,8 @@ public class Boss : MonoBehaviour, IHealth
     public int NumberOfBullets = 5;
     [Range(10, 80)]
     public float AttackAngle = 60;
+    [Range(10, 60)]
+    public float AttackRandomAngle = 30;
 
     [Header("Hit")]
     public Material HitMaterial;
@@ -46,12 +50,14 @@ public class Boss : MonoBehaviour, IHealth
         healthBar = GetComponentInChildren<HealthBar>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         defaultMaterial = spriteRenderer.material;
+        rb2D = GetComponent<Rigidbody2D>();
+        boxCollider2D = GetComponent<BoxCollider2D>();
 
         currentHealth = MaxHealth;
         UpdateHealthBar(currentHealth);
     }
 
-    void Update()
+    void FixedUpdate()
     {
         StopHitEffectIfNecessary();
         BossAI();
@@ -135,7 +141,8 @@ public class Boss : MonoBehaviour, IHealth
 
     void MoveToTargetPosition()
     {
-        transform.position = Vector2.Lerp(transform.position, targetPosition, Time.deltaTime * TransitSpeed);
+        Vector2 position = Vector2.MoveTowards(transform.position, targetPosition, Time.deltaTime * TransitSpeed);
+        rb2D.MovePosition(position);
     }
 
     bool SnapToTargetPosition()
@@ -144,7 +151,7 @@ public class Boss : MonoBehaviour, IHealth
 
         if (distance < TargetPositionSnapDistance)
         {
-            transform.position = targetPosition;
+            rb2D.MovePosition(targetPosition);
             return true;
         }
         else
@@ -155,14 +162,20 @@ public class Boss : MonoBehaviour, IHealth
 
     public void Fire()
     {
-        for(int index = 0; index < NumberOfBullets; index++)
+        float randomAngle = Random.Range(-1 * AttackRandomAngle, AttackRandomAngle);
+        DoFire(randomAngle);
+    }
+
+    public void DoFire(float randomAngle)
+    {
+        for (int index = 0; index < NumberOfBullets; index++)
         {
             GameObject bullet = Instantiate(Bullet, FirePosition.position, FirePosition.rotation);
-            Rigidbody2D rb2D = bullet.GetComponent<Rigidbody2D>();
-            float degree = 270 - AttackAngle;
-            degree += 2 * AttackAngle / (NumberOfBullets-1) * index;
+            Rigidbody2D bulletRb2D = bullet.GetComponent<Rigidbody2D>();
+            float degree = 270 + randomAngle - AttackAngle;
+            degree += 2 * AttackAngle / (NumberOfBullets - 1) * index;
             Vector2 direction = DegreeToDirection(degree);
-            rb2D.velocity = direction * BulletSpeed;
+            bulletRb2D.velocity = direction * BulletSpeed;
         }
     }
 
@@ -216,7 +229,11 @@ public class Boss : MonoBehaviour, IHealth
         {
             Instantiate(Explosion, transform.position, Quaternion.identity);
         }
-        Destroy(gameObject);
+
+        bossState = BossState.Idle;
+        boxCollider2D.enabled = false;
+
+        Destroy(gameObject, 2.5f);
     }
 
     void UpdateHealthBar(int health)
