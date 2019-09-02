@@ -1,5 +1,5 @@
 # Abstract
-YouTube Video Tutorial (In progress...)
+YouTube Video Tutorial
 
 ## Requirements
 1. Unity 2018.3.4 or later. You can download the latest version of Unity here: https://unity3d.com/get-unity/download
