@@ -10,8 +10,14 @@ public class Shoot : MonoBehaviour
 
     public void FireBullet(bool right)
     {
-        GameObject bullet = Instantiate(Bullet, FirePosition.position, FirePosition.rotation);
-        Rigidbody2D rb2D = bullet.GetComponent<Rigidbody2D>();
+        GameObject bulletGameObject = Instantiate(Bullet, FirePosition.position, FirePosition.rotation);
+        Rigidbody2D rb2D = bulletGameObject.GetComponent<Rigidbody2D>();
+        Bullet bullet = bulletGameObject.GetComponent<Bullet>();
+
+        if (bullet != null)
+        {
+            bullet.Owner = gameObject;
+        }
 
         if (right)
         {
