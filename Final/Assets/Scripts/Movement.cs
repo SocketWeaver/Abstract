@@ -31,7 +31,7 @@ public class Movement : MonoBehaviour
     Rigidbody2D rb2D;
     Vector2 footTopLeftCorner;
     Vector2 footBottomRightCorner;
-    bool faceRight = true;
+    public bool faceRight = true;
     bool jumped = false;
 
     // public methods
@@ -99,9 +99,12 @@ public class Movement : MonoBehaviour
     void Flip()
     {
         faceRight = !faceRight;
+    }
 
+    private void Update()
+    {
         Vector3 theScale = sprite.localScale;
-        theScale.x *= -1;
+        theScale.x = faceRight ? 1 :- 1;
         sprite.localScale = theScale;
     }
 }
